@@ -1,13 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import './index.css';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import 'typeface-roboto';
+
 const render = () => {
   ReactDOM.render(
-    <App />,
+    <React.Fragment>
+      <CssBaseline />
+      <App />
+    </React.Fragment>,
     document.getElementById('root'),
   );
 };

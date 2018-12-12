@@ -1,17 +1,19 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
+
 import Loadable from 'react-loadable';
 
 import LoadingComponent from './components/LoadingComponent';
+import DefaultLayout from './pages/DefaultLayout';
 
 const Home = Loadable({
-  loader: () => import('./components/Home'),
+  loader: () => import('./pages/Home'),
   loading: LoadingComponent,
 });
 
 const Routes = () => (
   <Switch>
-    <Route exact path="/" component={Home} />
+    <DefaultLayout exact path="/" component={Home} />
   </Switch>
 );
 
