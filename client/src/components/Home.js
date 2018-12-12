@@ -1,72 +1,43 @@
 import React from 'react';
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
+import { useJsonFetch, useFormInput, useFormSubmit } from '../hooks';
 
-    this.state = {
-      response: '',
-      post: '',
-      responseToPost: '',
-    };
-  }
+const HelloWorldForm = () => {
+  const postInput = useFormInput();
 
-  componentDidMount() {
-    this.callApi()
-      .then(({ express: response }) => this.setState({ response }))
-      .catch(console.error);
-  }
+  const { response, onSubmit } = useFormSubmit(
+    '/api/world',
+    { method: 'POST' },
+    { post: postInput.value },
+  );
 
-  callApi = async () => {
-    const response = await fetch('/api/hello');
-    const body = await response.json();
+  return (
+    <div>
+      <form onSubmit={onSubmit}>
+        <p>
+          <strong>Post to Server:</strong>
+        </p>
+        <input
+          type="text"
+          {...postInput}
+        />
+        <button type="submit">Submit</button>
+      </form>
+      <p>{response.message}</p>
+    </div>
+  );
+};
 
-    if (response.status !== 200) {
-      throw new Error(body.message);
-    }
+const Home = () => {
+  const response = useJsonFetch('/api/hello');
 
-    return body;
-  };
-
-  handleSubmit = async (e = new Event()) => {
-    e.preventDefault();
-
-    const { post } = this.state;
-
-    const response = await fetch('/api/world', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ post }),
-    });
-
-    const body = await response.text();
-
-    this.setState({ responseToPost: body });
-  };
-
-  render() {
-    const { response, post, responseToPost } = this.state;
-    return (
-      <div>
-        <h2>Home</h2>
-        <p>{response}</p>
-        <form onSubmit={this.handleSubmit}>
-          <p>
-            <strong>Post to Servera:</strong>
-          </p>
-          <input
-            type="text"
-            value={post}
-            onChange={e => this.setState({ post: e.target.value })}
-          />
-          <button type="submit">Submit</button>
-        </form>
-        <p>{responseToPost}</p>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <h2>home</h2>
+      <p>{response}</p>
+      <HelloWorldForm />
+    </div>
+  );
+};
 
 export default Home;

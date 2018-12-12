@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
-import { hot } from 'react-hot-loader';
-
 import Routes from './Routes';
 
 function BasicExample() {
@@ -23,4 +21,4 @@ function BasicExample() {
   );
 }
 
-export default hot(module)(BasicExample);
+export default BasicExample;
