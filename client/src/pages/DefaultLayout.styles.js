@@ -30,6 +30,9 @@ const styles = theme => ({
     flexGrow: 1,
     padding: theme.spacing.unit * 2,
   },
+  grow: {
+    flex: 1,
+  },
 });
 
 export default styles;
