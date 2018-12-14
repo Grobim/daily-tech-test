@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { useMappedState, useDispatch } from 'redux-react-hook';
 
-import LoginDialogComponent from '../components/LoginDialogComponent';
+import LoginDialogComponent from '../components/LoginDialog';
 
 import { SIGNUP_MODAL_TYPE } from '../reducers/ui';
 import { loginModalOpenedSelector, signupModalOpenedSelector, modalTypeSelector } from '../selectors/ui';
@@ -24,7 +24,7 @@ const mapState = (state) => {
   };
 };
 
-const LoginDialogContainer = (props) => {
+const LoginDialog = (props) => {
   const stateProps = useMappedState(mapState);
 
   const dispatch = useDispatch();
@@ -48,4 +48,4 @@ const LoginDialogContainer = (props) => {
   return <LoginDialogComponent {...props} {...stateProps} {...dispatchProps} />;
 };
 
-export default LoginDialogContainer;
+export default LoginDialog;

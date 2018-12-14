@@ -11,7 +11,7 @@ const signUp = (req, res) => {
       password: sha256(req.body.password),
     };
 
-    const { password, ...newUser } = getUsers().insert(user);
+    const { password, meta, ...newUser } = getUsers().insert(user);
 
     res.set('Set-Cookie', `Authorization=Bearer ${jwt.sign(newUser.$loki, apiSecret)}`); 
     res.send(newUser);
@@ -25,6 +25,7 @@ const signUp = (req, res) => {
 const logIn = (req, res) => {
   const {
     password,
+    meta,
     ...user
   } = getUsers().findOne({ username: req.body.username }) || {};
 
@@ -53,11 +54,11 @@ const requireLogin = (req, res, next) => {
 
   try {
     jwt.verify(jwtToken, apiSecret);
+
+    next();
   } catch (e) {
     res.sendStatus(403);
   }
-
-  next();
 }
 
 module.exports = {
