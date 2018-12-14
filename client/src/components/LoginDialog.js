@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-import { compose } from 'recompose';
+import compose from 'recompose/compose';
 
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -44,6 +44,7 @@ const LoginDialog = ({
 
   const onSubmit = (e = new Event()) => {
     e.preventDefault();
+
     const payload = {
       username: username.value,
       password: password.value,

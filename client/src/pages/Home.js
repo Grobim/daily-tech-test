@@ -1,41 +1,44 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
-import { useJsonFetch, useFormInput, useFormSubmit } from '../hooks';
+import { useMappedState, useDispatch } from 'redux-react-hook';
 
-const HelloWorldForm = () => {
-  const postInput = useFormInput();
+import Button from '@material-ui/core/Button';
 
-  const { response, onSubmit } = useFormSubmit(
-    '/api/world',
-    { method: 'POST' },
-    { post: postInput.value },
-  );
+import Products from '../containers/Products';
+import AddProductDialog from '../containers/AddProductDialog';
 
-  return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <p>
-          <strong>Post to Server:</strong>
-        </p>
-        <input
-          type="text"
-          {...postInput}
-        />
-        <button type="submit">Submit</button>
-      </form>
-      <p>{response.message}</p>
-    </div>
-  );
-};
+import { isAdminSeletor } from '../selectors/user';
+
+import { openAddProductModal } from '../actionCreators/ui';
+
+const mapState = state => ({
+  isAdmin: isAdminSeletor(state),
+});
 
 const Home = () => {
-  const response = useJsonFetch('/api/hello');
+  const { isAdmin } = useMappedState(mapState);
+
+  const dispatch = useDispatch();
+  const openModal = useCallback(() => {
+    dispatch(openAddProductModal());
+  }, []);
 
   return (
     <div>
-      <h2>home</h2>
-      <p>{response}</p>
-      <HelloWorldForm />
+      <h2>Products</h2>
+      {isAdmin && (
+        <React.Fragment>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={openModal}
+          >
+            Add a Product
+          </Button>
+          <AddProductDialog />
+        </React.Fragment>
+      )}
+      <Products />
     </div>
   );
 };

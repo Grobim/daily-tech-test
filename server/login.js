@@ -53,7 +53,11 @@ const requireLogin = (req, res, next) => {
   const jwtToken = authCookie.split('Bearer ').join('');
 
   try {
-    jwt.verify(jwtToken, apiSecret);
+    const id = jwt.verify(jwtToken, apiSecret);
+
+    if (!getUsers().get(id)) {
+      throw new Error();
+    }
 
     next();
   } catch (e) {
@@ -61,9 +65,27 @@ const requireLogin = (req, res, next) => {
   }
 }
 
+const requireAdmin = (req, res, next) => {
+  const authCookie = req.cookies['Authorization'];
+  const jwtToken = authCookie.split('Bearer ').join('');
+
+  try {
+    const id = jwt.verify(jwtToken, apiSecret);
+    const connectedUser = getUsers().get(id);
+
+    if (!connectedUser || connectedUser.role !== 'Admin') {
+      throw new Error();
+    }
+    next();
+  } catch (e) {
+    res.sendStatus(403);
+  }
+};
+
 module.exports = {
   signUp,
   logIn,
   logOut,
   requireLogin,
+  requireAdmin,
 };

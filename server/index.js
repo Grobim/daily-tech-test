@@ -14,15 +14,6 @@ app.post('/sign-up', signUp);
 app.post('/login', logIn);
 app.post('/logout', requireLogin, logOut);
 
-app.get('/api/hello', (_, res) => {
-  res.send({ express: 'Hello From Express' });
-});
-
-app.post('/api/world', (req, res) => {
-  console.log(req.body);
-  res.send({
-    message: `I received your POST request. This is what you sent me: ${req.body.post}`
-  });
-});
+app.use('/products', require('./products'));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

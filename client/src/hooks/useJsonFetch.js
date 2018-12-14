@@ -3,7 +3,7 @@ import { useState, useRef } from 'react';
 import { useAsyncEffect } from 'use-async-effect';
 
 const useJsonFetch = (url, options, inputs = []) => {
-  const [response, setResponse] = useState('');
+  const [response, setResponse] = useState();
   const canceled = useRef(false);
 
   useAsyncEffect(async () => {
@@ -15,7 +15,7 @@ const useJsonFetch = (url, options, inputs = []) => {
     }
 
     if (!canceled.current) {
-      setResponse(body.express);
+      setResponse(body);
     }
   }, () => { canceled.current = true; }, inputs);
 

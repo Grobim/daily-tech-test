@@ -1,4 +1,8 @@
-import { UI_SET_LOGIN_OPENED, UI_SET_SIGNUP_OPENED } from '../reducers/ui';
+import {
+  UI_SET_LOGIN_OPENED,
+  UI_SET_SIGNUP_OPENED,
+  UI_SET_ADD_PRODUCT_OPENED,
+} from '../reducers/ui';
 
 const openLoginModal = () => ({
   type: UI_SET_LOGIN_OPENED,
@@ -20,9 +24,21 @@ const closeSignUpModal = () => ({
   payload: false,
 });
 
+const openAddProductModal = () => ({
+  type: UI_SET_ADD_PRODUCT_OPENED,
+  payload: true,
+});
+
+const closeAddProductModal = () => ({
+  type: UI_SET_ADD_PRODUCT_OPENED,
+  payload: false,
+});
+
 export {
   openLoginModal,
   closeLoginModal,
   openSignupModal,
   closeSignUpModal,
+  openAddProductModal,
+  closeAddProductModal,
 };
