@@ -1,4 +1,4 @@
-const { users } = require('./database');
+const { getUsers } = require('./database');
 const jwt = require('jsonwebtoken');
 const sha256 = require('js-sha256').sha256;
 
@@ -11,7 +11,7 @@ const signUp = (req, res) => {
       password: sha256(req.body.password),
     };
 
-    const { password, ...newUser } = users.insert(user);
+    const { password, ...newUser } = getUsers().insert(user);
 
     res.set('Set-Cookie', `Authorization=Bearer ${jwt.sign(newUser.$loki, apiSecret)}`); 
     res.send(newUser);
@@ -26,7 +26,7 @@ const logIn = (req, res) => {
   const {
     password,
     ...user
-  } = users.findOne({ username: req.body.username }) || {};
+  } = getUsers().findOne({ username: req.body.username }) || {};
 
   if (user && password  && password === sha256(req.body.password)) {
     res.set('Set-Cookie', `Authorization=Bearer ${jwt.sign(user.$loki, apiSecret)}`);
