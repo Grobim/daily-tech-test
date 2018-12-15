@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Loadable from 'react-loadable';
 
@@ -11,9 +11,16 @@ const Home = Loadable({
   loading: LoadingComponent,
 });
 
+const Profile = Loadable({
+  loader: () => import('./pages/Profile'),
+  loading: LoadingComponent,
+});
+
 const Routes = () => (
   <Switch>
     <DefaultLayout exact path="/" component={Home} />
+    <DefaultLayout exact path="/profile" component={Profile} />
+    <Route component={() => <Redirect to="/" />} />
   </Switch>
 );
 

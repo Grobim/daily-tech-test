@@ -15,5 +15,6 @@ app.post('/login', logIn);
 app.post('/logout', requireLogin, logOut);
 
 app.use('/products', require('./products'));
+app.use('/users', require('./users'));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

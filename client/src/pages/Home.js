@@ -3,6 +3,8 @@ import React, { useCallback } from 'react';
 import { useMappedState, useDispatch } from 'redux-react-hook';
 
 import Button from '@material-ui/core/Button';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 
 import Products from '../containers/Products';
@@ -20,6 +22,9 @@ const styles = theme => ({
   addButton: {
     marginBottom: theme.spacing.unit * 3,
   },
+  divider: {
+    margin: `${theme.spacing.unit}px 0`,
+  },
 });
 
 const Home = ({ classes }) => {
@@ -32,7 +37,8 @@ const Home = ({ classes }) => {
 
   return (
     <div>
-      <h2>Products</h2>
+      <Typography variant="h4">Products</Typography>
+      <Divider className={classes.divider} variant="fullWidth" />
       {isAdmin && (
         <React.Fragment>
           <Button

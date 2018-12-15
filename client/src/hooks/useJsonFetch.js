@@ -7,15 +7,20 @@ const useJsonFetch = (url, options, inputs = []) => {
   const canceled = useRef(false);
 
   useAsyncEffect(async () => {
-    const res = await fetch(url, options);
-    const body = await res.json();
+    try {
+      const res = await fetch(url, options);
+      const body = await res.json();
 
-    if (res.status !== 200) {
-      throw new Error(body.message);
-    }
+      if (res.status !== 200) {
+        throw new Error(body.message);
+      }
 
-    if (!canceled.current) {
-      setResponse(body);
+      if (!canceled.current) {
+        setResponse(body);
+      }
+    } catch (e) {
+      console.error(e);
+      throw e;
     }
   }, () => { canceled.current = true; }, inputs);
 
