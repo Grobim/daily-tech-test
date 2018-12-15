@@ -11,7 +11,7 @@ const signUp = (req, res) => {
       password: sha256(req.body.password),
     };
 
-    const { password, meta, ...newUser } = getUsers().insert(user);
+    const { password, ...newUser } = getUsers().insert(user);
 
     res.set('Set-Cookie', `Authorization=Bearer ${jwt.sign(newUser.$loki, apiSecret)}`); 
     res.send(newUser);
@@ -25,11 +25,10 @@ const signUp = (req, res) => {
 const logIn = (req, res) => {
   const {
     password,
-    meta,
     ...user
   } = getUsers().findOne({ username: req.body.username }) || {};
 
-  if (user && password  && password === sha256(req.body.password)) {
+  if (user && password && password === sha256(req.body.password)) {
     res.set('Set-Cookie', `Authorization=Bearer ${jwt.sign(user.$loki, apiSecret)}`);
 
     res.send(user);
@@ -40,7 +39,7 @@ const logIn = (req, res) => {
 
 const logOut = (_, res) => {
   res.set('Set-Cookie', `Authorization=; expires=Thu, 01 Jan 1970 00:00:00 GMT`);
-  res.sendStatus(200);
+  res.sendStatus(204);
 };
 
 const requireLogin = (req, res, next) => {

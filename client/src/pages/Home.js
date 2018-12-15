@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import { useMappedState, useDispatch } from 'redux-react-hook';
 
 import Button from '@material-ui/core/Button';
+import { withStyles } from '@material-ui/core/styles';
 
 import Products from '../containers/Products';
 import AddProductDialog from '../containers/AddProductDialog';
@@ -15,7 +16,13 @@ const mapState = state => ({
   isAdmin: isAdminSeletor(state),
 });
 
-const Home = () => {
+const styles = theme => ({
+  addButton: {
+    marginBottom: theme.spacing.unit * 3,
+  },
+});
+
+const Home = ({ classes }) => {
   const { isAdmin } = useMappedState(mapState);
 
   const dispatch = useDispatch();
@@ -32,6 +39,7 @@ const Home = () => {
             variant="contained"
             color="primary"
             onClick={openModal}
+            className={classes.addButton}
           >
             Add a Product
           </Button>
@@ -43,4 +51,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default withStyles(styles)(Home);

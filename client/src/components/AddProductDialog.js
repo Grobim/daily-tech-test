@@ -45,6 +45,7 @@ const AddProductDialog = ({
                 id="nameField"
                 label="Name"
                 fullWidth
+                autoFocus
                 {...name}
               />
             </Grid>
@@ -75,7 +76,7 @@ const AddProductDialog = ({
         <Button onClick={onClose} color="primary">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} color="primary" autoFocus>
+        <Button onClick={handleSubmit} color="primary">
           Add
         </Button>
       </DialogActions>

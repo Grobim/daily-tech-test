@@ -8,7 +8,11 @@ router.get('/', (_, res) => {
 });
 
 router.post('/', requireLogin, requireAdmin, (req, res) => {
-  const { meta, ...newProduct } = getProducts().insert(req.body);
+  const requestProduct = {
+    ...req.body,
+    price: parseFloat(req.body.price, 10),
+  };
+  const newProduct = getProducts().insert(requestProduct);
 
   res.send(newProduct);
 });
